@@ -1,32 +1,25 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Formatter;
-import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * Code by @author Wonsun Ahn
  * 
- * <p>
- * BeanCounterLogic: The bean counter, also known as a quincunx or the Galton
+ * <p>BeanCounterLogic: The bean counter, also known as a quincunx or the Galton
  * box, is a device for statistics experiments named after English scientist Sir
  * Francis Galton. It consists of an upright board with evenly spaced nails (or
  * pegs) in a triangular form. Each bean takes a random path and falls into a
  * slot.
  *
- * <p>
- * Beans are dropped from the opening of the board. Every time a bean hits a
+ * <p>Beans are dropped from the opening of the board. Every time a bean hits a
  * nail, it has a 50% chance of falling to the left or to the right. The piles
  * of beans are accumulated in the slots at the bottom of the board.
  * 
- * <p>
- * This class implements the core logic of the machine. The MainPanel uses the
+ * <p>This class implements the core logic of the machine. The MainPanel uses the
  * state inside BeanCounterLogic to display on the screen.
  * 
- * <p>
- * Note that BeanCounterLogic uses a logical coordinate system to store the
+ * <p>Note that BeanCounterLogic uses a logical coordinate system to store the
  * positions of in-flight beans.For example, for a 4-slot machine: (0, 0) (0, 1)
  * (1, 1) (0, 2) (1, 2) (2, 2) (0, 3) (1, 3) (2, 3) (3, 3) [Slot0] [Slot1]
  * [Slot2] [Slot3]
@@ -91,10 +84,11 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public int getInFlightBeanXPos(int yPos) {
 		// TODO: Implement
-		if (inFlightBeans.get(yPos) != null)
+		if (inFlightBeans.get(yPos) != null) {
 			return inFlightBeans.get(yPos).getXPos();
-		else
+		} else {
 			return NO_BEAN_IN_YPOS;
+		}
 	}
 
 	/**
@@ -105,10 +99,12 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public int getSlotBeanCount(int i) {
 		// TODO: Implement
-		if (slotBean.isEmpty())
+		if (slotBean.isEmpty()) {
 			return 0;
-		if (slotBean.get(i) == null)
+		}
+		if (slotBean.get(i) == null) {
 			return 0;
+		}
 		return slotBean.get(i).size();
 	}
 
@@ -126,8 +122,9 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 			sumOfAllSlotNums += (i * count);
 			sumOfSlotCounts += count;
 		}
-		if (sumOfSlotCounts > 0)
+		if (sumOfSlotCounts > 0) {
 			return sumOfAllSlotNums / (double) sumOfSlotCounts;
+		}
 		return 0;
 	}
 
@@ -139,37 +136,44 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public void upperHalf() {
 		// TODO: Implement
-		int sumOfSlotCounts = getSumOfSlotCount()-1;
+		int sumOfSlotCounts = getSumOfSlotCount() - 1;
 		int slot = 0;
-		int beanNumber = getSlotBeanCount(slot)-1;
+		int beanNumber = getSlotBeanCount(slot) - 1;
 		int deleted = 0;
-		//System.out.println("sumOfCounts: " + sumOfSlotCounts);
-		while(deleted < Math.floor(sumOfSlotCounts / 2) ){
-			/*if (slotBean.get(slot).isEmpty()) {
-				slot++;
-				beanNumber = 0;
-				System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
-			}*/
-			
-			//System.out.println("i: " + deleted + " count: " + getSlotBeanCount(slot)+" beanNumber: " + beanNumber);
-			if(beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0 ) {
-				//System.out.println("slot not empty: slot: " + slot + " beanN: " + beanNumber);
+		// System.out.println("sumOfCounts: " + sumOfSlotCounts);
+		while (deleted < (sumOfSlotCounts / 2)) {
+			/*
+			 * if (slotBean.get(slot).isEmpty()) { slot++; beanNumber = 0;
+			 * System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber); }
+			 */
+
+			// System.out.println("i: " + deleted + " count: " + getSlotBeanCount(slot)+"
+			// beanNumber: " + beanNumber);
+			if (beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0) {
+				// System.out.println("slot not empty: slot: " + slot + " beanN: " +
+				// beanNumber);
 				slotBean.get(slot).remove(beanNumber--);
 				deleted++;
+			} else {
+				// System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
+				if (slot < getSlotCount() - 1) {
+					slot++;
+				}
+				if (getSlotBeanCount(slot) > 0) {
+					beanNumber = getSlotBeanCount(slot) - 1;
+				} else {
+					beanNumber = 0;
+				}
+
 			}
-			else
-			{
-				//System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
-				if(slot < getSlotCount()-1) slot++;
-				if(getSlotBeanCount(slot) > 0) beanNumber = getSlotBeanCount(slot)-1;
-				else beanNumber = 0;
-				
-			}
-			
+
 		}
 
 	}
 
+	/**
+	 * Returns the number of beans.
+	 */
 	public int getSumOfSlotCount() {
 		int sumOfSlotCounts = 0;
 		for (int i = 0; i < slotBean.size(); i++) {
@@ -187,35 +191,41 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public void lowerHalf() {
 		// TODO: Implement
-		int sumOfSlotCounts = getSumOfSlotCount()-1;
-		if(sumOfSlotCounts < 0) return;
-		//if(getSlotCount() == 1 && getSumOfSlotCount() == 1) return;
-		int slot = getSlotCount()-1;
-		int beanNumber = getSlotBeanCount(slot)-1;
-		int deleted=0;
-		//System.out.println("sumOfCounts: " + sumOfSlotCounts);
-		while(deleted < Math.floor(sumOfSlotCounts / 2) ){
-			/*if (slotBean.get(slot).isEmpty()) {
-				slot++;
-				beanNumber = 0;
-				System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
-			}*/
-			
-			//System.out.println("i: " + deleted + " count: " + getSlotBeanCount(slot)+" beanNumber: " + beanNumber);
-			if(beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0 ) {
-				//System.out.println("slot not empty: slot: " + slot + " beanN: " + beanNumber);
+		int sumOfSlotCounts = getSumOfSlotCount() - 1;
+		if (sumOfSlotCounts < 0) {
+			return;
+		}
+		// if(getSlotCount() == 1 && getSumOfSlotCount() == 1) return;
+		int slot = getSlotCount() - 1;
+		int beanNumber = getSlotBeanCount(slot) - 1;
+		int deleted = 0;
+		// System.out.println("sumOfCounts: " + sumOfSlotCounts);
+		while (deleted < (sumOfSlotCounts / 2)) {
+			/*
+			 * if (slotBean.get(slot).isEmpty()) { slot++; beanNumber = 0;
+			 * System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber); }
+			 */
+
+			// System.out.println("i: " + deleted + " count: " + getSlotBeanCount(slot)+"
+			// beanNumber: " + beanNumber);
+			if (beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0) {
+				// System.out.println("slot not empty: slot: " + slot + " beanN: " +
+				// beanNumber);
 				slotBean.get(slot).remove(beanNumber--);
 				deleted++;
+			} else {
+				// System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
+				if (slot >= 0) {
+					slot--;
+				}
+				if (getSlotBeanCount(slot) > 0) {
+					beanNumber = getSlotBeanCount(slot) - 1;
+				} else {
+					beanNumber = 0;
+				}
+
 			}
-			else
-			{
-				//System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
-				if(slot >= 0) slot--;
-				if(getSlotBeanCount(slot) > 0) beanNumber = getSlotBeanCount(slot)-1;
-				else beanNumber = 0;
-				
-			}
-			
+
 		}
 	}
 
@@ -235,14 +245,16 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 			slotBean.add(e);
 			inFlightBeans.add(null);
 		}
-		if (beans == null)
+		if (beans == null) {
 			return;
+		}
 
 		this.remainingBeans.addAll(Arrays.asList(beans));
-		//System.out.println("reset: ");
+		// System.out.println("reset: ");
 		insertBean();
-		if (inFlightBeans.get(0) != null)
+		if (inFlightBeans.get(0) != null) {
 			inFlightBeans.get(0).reset();
+		}
 
 	}
 
@@ -253,33 +265,37 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public void repeat() {
 		// TODO: Implement
-		//System.out.println("size remainingBeans: " + remainingBeans.size());
-		//System.out.println("getallbeans: " + this.getSumOfSlotCount());
-		//System.out.println("size of inflight: " + inFlightBeans.size());
+		// System.out.println("size remainingBeans: " + remainingBeans.size());
+		// System.out.println("getallbeans: " + this.getSumOfSlotCount());
+		// System.out.println("size of inflight: " + inFlightBeans.size());
 
 		for (int i = 0; i < this.getSlotCount(); i++) {
-			if (slotBean.isEmpty())
+			if (slotBean.isEmpty()) {
 				break;
-			for(int k=0; k < slotBean.get(i).size(); k++)
-			{
-				if(slotBean.get(i).get(k) != null)
-					this.remainingBeans.add(slotBean.get(i).get(k));
 			}
-			//this.remainingBeans
-					//.addAll(this.slotBean.get(i).stream().filter(x -> x != null).collect(Collectors.toList()));
-			if(this.inFlightBeans.get(i) != null)
+			for (int k = 0; k < slotBean.get(i).size(); k++) {
+				if (slotBean.get(i).get(k) != null) {
+					this.remainingBeans.add(slotBean.get(i).get(k));
+				}
+			}
+			// this.remainingBeans
+			// .addAll(this.slotBean.get(i).stream().filter(x -> x !=
+			// null).collect(Collectors.toList()));
+			if (this.inFlightBeans.get(i) != null) {
 				this.remainingBeans.add(this.inFlightBeans.get(i));
+			}
 		}
-		inFlightBeans.clear();		
+		inFlightBeans.clear();
 		this.slotBean.clear();
-		for(int i=0; i < getSlotCount(); i++)
-		{
+		for (int i = 0; i < getSlotCount(); i++) {
 			ArrayList<Bean> e = new ArrayList<>();
 			slotBean.add(e);
 			inFlightBeans.add(null);
 		}
 		insertBean();
-		if(inFlightBeans.get(0) != null) inFlightBeans.get(0).reset();
+		if (inFlightBeans.get(0) != null) {
+			inFlightBeans.get(0).reset();
+		}
 	}
 
 	/**
@@ -292,135 +308,94 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public boolean advanceStep() {
 		// TODO: Implement
-		/*System.out.println("Before:");
-		for(int i=0; i < getSlotCount(); i++)
-		{
-			if(inFlightBeans.get(i)==null)
-				System.out.println(i+"=null");
-			else
-				System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos());
-		}*/
-		
-		boolean anyStatusChange=false;
-		Bean prev=null; 
-		Bean bean=inFlightBeans.get(0);
-		
-		for(int i=0; i < getSlotCount(); i++)
-		{
-			if(i < getSlotCount()-1)
-			{
-				//System.out.println("i < count-2");
+		/*
+		 * System.out.println("Before:"); for(int i=0; i < getSlotCount(); i++) {
+		 * if(inFlightBeans.get(i)==null) System.out.println(i+"=null"); else
+		 * System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos()); }
+		 */
+
+		boolean anyStatusChange = false;
+		Bean prev = null;
+		Bean bean = inFlightBeans.get(0);
+
+		for (int i = 0; i < getSlotCount(); i++) {
+			if (i < getSlotCount() - 1) {
+				// System.out.println("i < count-2");
 				prev = bean;
-				bean = inFlightBeans.get(i+1);
-				if(prev!=null) prev.choose();
-				inFlightBeans.set(i+1, prev);		
+				bean = inFlightBeans.get(i + 1);
+				if (prev != null) {
+					prev.choose();
+				}
+				inFlightBeans.set(i + 1, prev);
 				anyStatusChange = true;
-			}
-			else
-			{
-				//System.out.println("i else: " + i);
-				if(bean != null) {
+			} else {
+				// System.out.println("i else: " + i);
+				if (bean != null) {
 					this.slotBean.get(bean.getXPos()).add(bean);
-					anyStatusChange= true;
+					anyStatusChange = true;
 				}
 			}
-			
-						
+
 		}
 		insertBean();
-		if(inFlightBeans.get(0) != null) inFlightBeans.get(0).reset();
-		//System.out.println("After:");
-		/*for(int i=0; i < getSlotCount(); i++)
-		{
-			if(inFlightBeans.get(i)==null)
-				System.out.println(i+"=null");
-			else
-				System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos());
-		}*/
+		if (inFlightBeans.get(0) != null) {
+			inFlightBeans.get(0).reset();
+		}
+		// System.out.println("After:");
+		/*
+		 * for(int i=0; i < getSlotCount(); i++) { if(inFlightBeans.get(i)==null)
+		 * System.out.println(i+"=null"); else System.out.println(i+" not null:" +
+		 * inFlightBeans.get(i).getXPos()); }
+		 */
 		return anyStatusChange;
 
 	}
 
-	/* public boolean advanceStep() {
-		// TODO: Implement
-		System.out.println("Before:");
-		for(int i=0; i < getSlotCount(); i++)
-		{
-			if(inFlightBeans.get(i)==null)
-				System.out.println(i+"=null");
-			else
-				System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos());
-		}
-		if(getSlotCount()==0) return false;
-		boolean anyStatusChange=false;
-		Bean prev = inFlightBeans.get(0);
-		if(getSlotCount()==1) {
-			insertBean();
-			this.slotBean.get(0).add(prev);
-			this.inFlightBeans.set(0,null);
-			return false;
-		}
-		Bean bean = inFlightBeans.get(1);
-		if(prev != null) prev.choose();
-		inFlightBeans.set(1, prev);
-		
-		for(int i=1; i < getSlotCount(); i++)
-		{
-			if(bean == null && i < getSlotCount()-1)
-			{
-				//System.out.println("Bean is null");
-				prev = bean;
-				bean = inFlightBeans.get(i+1);
-				if(i < getSlotCount() - 1)
-					inFlightBeans.set(i+1, prev);
-				continue;
-			}	
-			if(i < getSlotCount()-1)
-			{
-				//System.out.println("i < count-2");
-				prev = bean;
-				bean = inFlightBeans.get(i+1);
-				prev.choose();
-				inFlightBeans.set(i+1, prev);		
-				anyStatusChange = true;
-			}
-			else
-			{
-				//System.out.println("i else: " + i);
-				if(bean != null) {
-					this.slotBean.get(bean.getXPos()).add(bean);
-					anyStatusChange= true;
-				}
-			}
-			
-						
-		}
-		insertBean();
-		if(inFlightBeans.get(0) != null) inFlightBeans.get(0).reset();
-		/*System.out.println("After:");
-		for(int i=0; i < getSlotCount(); i++)
-		{
-			if(inFlightBeans.get(i)==null)
-				System.out.println(i+"=null");
-			else
-				System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos());
-		}
-		return anyStatusChange;
-
-	} */
+	/*
+	 * public boolean advanceStep() { // TODO: Implement
+	 * System.out.println("Before:"); for(int i=0; i < getSlotCount(); i++) {
+	 * if(inFlightBeans.get(i)==null) System.out.println(i+"=null"); else
+	 * System.out.println(i+" not null:" + inFlightBeans.get(i).getXPos()); }
+	 * if(getSlotCount()==0) return false; boolean anyStatusChange=false; Bean prev
+	 * = inFlightBeans.get(0); if(getSlotCount()==1) { insertBean();
+	 * this.slotBean.get(0).add(prev); this.inFlightBeans.set(0,null); return false;
+	 * } Bean bean = inFlightBeans.get(1); if(prev != null) prev.choose();
+	 * inFlightBeans.set(1, prev);
+	 * 
+	 * for(int i=1; i < getSlotCount(); i++) { if(bean == null && i <
+	 * getSlotCount()-1) { //System.out.println("Bean is null"); prev = bean; bean =
+	 * inFlightBeans.get(i+1); if(i < getSlotCount() - 1) inFlightBeans.set(i+1,
+	 * prev); continue; } if(i < getSlotCount()-1) {
+	 * //System.out.println("i < count-2"); prev = bean; bean =
+	 * inFlightBeans.get(i+1); prev.choose(); inFlightBeans.set(i+1, prev);
+	 * anyStatusChange = true; } else { //System.out.println("i else: " + i);
+	 * if(bean != null) { this.slotBean.get(bean.getXPos()).add(bean);
+	 * anyStatusChange= true; } }
+	 * 
+	 * 
+	 * } insertBean(); if(inFlightBeans.get(0) != null)
+	 * inFlightBeans.get(0).reset(); /*System.out.println("After:"); for(int i=0; i
+	 * < getSlotCount(); i++) { if(inFlightBeans.get(i)==null)
+	 * System.out.println(i+"=null"); else System.out.println(i+" not null:" +
+	 * inFlightBeans.get(i).getXPos()); } return anyStatusChange;
+	 * 
+	 * }
+	 */
 
 	private void insertBean() {
-		
-		if(!remainingBeans.isEmpty()) {
-			//System.out.println("remaining at zero " + this.remainingBeans.get(0).getXPos());
-			this.inFlightBeans.set(0,this.remainingBeans.remove(0));}
-		else
-			this.inFlightBeans.set(0,null);
+
+		if (!remainingBeans.isEmpty()) {
+			// System.out.println("remaining at zero " +
+			// this.remainingBeans.get(0).getXPos());
+			this.inFlightBeans.set(0, this.remainingBeans.remove(0));
+		} else {
+			this.inFlightBeans.set(0, null);
+		}
 	}
-	
+
 	/**
-	 * Number of spaces in between numbers when printing out the state of the machine.
-	 * Make sure the number is odd (even numbers don't work as well).
+	 * Number of spaces in between numbers when printing out the state of the
+	 * machine. Make sure the number is odd (even numbers don't work as well).
 	 */
 	private int xspacing = 3;
 
@@ -486,7 +461,7 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 		System.out.println("Example: java BeanCounterLogic 10 400 luck");
 		System.out.println("Example: java BeanCounterLogic 20 1000 skill debug");
 	}
-	
+
 	/**
 	 * Auxiliary main method. Runs the machine in text mode with no bells and
 	 * whistles. It simply shows the slot bean count at the end.
@@ -524,7 +499,7 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 			showUsage();
 			return;
 		}
-		
+
 		if (args.length == 4 && args[3].equals("debug")) {
 			debug = true;
 		} else {
@@ -557,6 +532,6 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 		// display experimental results
 		System.out.println("Slot bean counts:");
 		System.out.println(logic.getSlotString());
-		//logic.upperHalf();
+		// logic.upperHalf();
 	}
 }

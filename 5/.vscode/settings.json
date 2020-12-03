@@ -1,0 +1,4 @@
+{
+    "java.checkstyle.version": "8.38",
+    "java.checkstyle.configuration": "${workspaceFolder}/checkstyle-jars/google_checks_modified.xml"
+}
