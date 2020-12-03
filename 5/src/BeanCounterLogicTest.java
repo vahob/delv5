@@ -227,35 +227,7 @@ public class BeanCounterLogicTest {
 	public void testLowerHalf() {
 		// TODO: Implement
 		
-		int[] prevSlot = new int[slotCount];
-		int[] testSlot = new int[slotCount];
 		
-		logic.reset(beans);
-		while (logic.advanceStep()) {
-
-		}
-		for (int i = 0; i < slotCount; i++) {
-			prevSlot[i] = logic.getSlotBeanCount(i);							
-		}
-		logic.lowerHalf();
-		int[] newSlot = new int[slotCount];
-		for (int i = 0; i < slotCount; i++) {
-			newSlot[i] = logic.getSlotBeanCount(i);							
-		}
-		int beanC = 0;
-		int slotC = 0;
-		int lowerHalf = beanCount % 2 == 0 ? beanCount / 2 : (beanCount + 1) / 2;
-		while (beanC < lowerHalf && slotC < slotCount) {
-			if (prevSlot[slotC] == newSlot[slotC]) {
-				testSlot[slotC] = prevSlot[slotC];
-				beanC += prevSlot[slotC];
-				slotC++;
-			} else {
-				testSlot[slotC] = lowerHalf - beanC;
-				break;
-			}				
-		}
-		assertArrayEquals(failString, testSlot, newSlot);
 	}
 	
 	/**
@@ -273,36 +245,7 @@ public class BeanCounterLogicTest {
 	public void testUpperHalf() {
 		// TODO: Implement
 		
-		logic.reset(beans);
-		while (logic.advanceStep()) { 
-
-		}
-		int[] prevSlot = new int[slotCount];
-		int[] testSlot = new int[slotCount];
-
-		for (int i = 0; i < slotCount; i++) {
-			prevSlot[i] = logic.getSlotBeanCount(i);							
-		}
-		logic.upperHalf();
-		int[] newSlot = new int[slotCount];
-		for (int i = 0; i < slotCount; i++) {
-			newSlot[i] = logic.getSlotBeanCount(i);							
-		}
-		int beanC = 0;
-		int slotC = slotCount - 1;
-		int upperHalf = beanCount % 2 == 0 ? beanCount / 2 : (beanCount + 1) / 2;
-		while (beanC < upperHalf && slotC >= 0) {
-			if (prevSlot[slotC] == newSlot[slotC]) {
-				testSlot[slotC] = prevSlot[slotC];
-				beanC += prevSlot[slotC];
-				slotC--;
-			} else {
-				testSlot[slotC] = upperHalf - beanC;
-				break;
-			}
-				
-		}
-		assertArrayEquals(failString, testSlot, newSlot);
+		
 	}
 	
 	/**
