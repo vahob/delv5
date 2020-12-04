@@ -292,16 +292,16 @@ public class BeanCounterLogicTest {
 		int beanC = 0;
 		int slotC = slotCount - 1;
 		int upperHalf = beanCount % 2 == 0 ? beanCount / 2 : (beanCount + 1) / 2;
-		System.out.println("beanC: " + beanC + " upper: " + upperHalf);
+		//System.out.println("beanC: " + beanC + " upper: " + upperHalf);
 		while (beanC < upperHalf && slotC >= 0) {
 			if (prevSlot[slotC] == newSlot[slotC]) {
 				testSlot[slotC] = prevSlot[slotC];
 				beanC += prevSlot[slotC];
-				System.out.println("beanC: " + beanC);
+				//System.out.println("beanC: " + beanC);
 				slotC--;
 			} else {
 				testSlot[slotC] = upperHalf - beanC;
-				System.out.println("prevC: " + prevSlot[slotC] + " newC: " + newSlot[slotC]);
+				//System.out.println("prevC: " + prevSlot[slotC] + " newC: " + newSlot[slotC]);
 				break;
 			}
 				
@@ -355,6 +355,16 @@ public class BeanCounterLogicTest {
 	@Test
 	public void testInsertAtTopOfMachine() {
 		logic.reset(beans);
+		while (logic.advanceStep()) {
+
+		}
+		logic.upperHalf();
+		logic.lowerHalf();
+		logic.repeat();
+		while (logic.advanceStep()) {
+
+		}
+		
 
 
 	}

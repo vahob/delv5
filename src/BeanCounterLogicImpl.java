@@ -199,7 +199,7 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 		int beanNumber = getSlotBeanCount(slot) - 1;
 		int deleted = 0;
 		// System.out.println("sumOfCounts: " + sumOfSlotCounts);
-		while (deleted < (sumOfSlotCounts / 2)) {
+		while (deleted < (double)(sumOfSlotCounts / 2.0)) {
 			/*
 			 * if (slotBean.get(slot).isEmpty()) { slot++; beanNumber = 0;
 			 * System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber); }
