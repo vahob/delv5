@@ -331,7 +331,7 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 				// System.out.println("i else: " + i);
 				if (bean != null) {
 					this.slotBean[bean.getXPos()].add(bean);
-					anyStatusChange = false;
+					anyStatusChange = true;
 				}
 			}
 
