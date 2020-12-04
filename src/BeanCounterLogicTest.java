@@ -207,9 +207,10 @@ public class BeanCounterLogicTest {
 				inFlight++;
 			}				
 		}
-		assertTrue(failString, rem == 0);
-		assertTrue(failString, inFlight == 0);
-		assertEquals(failString, beanCount, inSlot);
+		assertEquals("rem"+failString, rem, 0);
+		assertEquals("inf "+failString, inFlight, 0);
+		assertEquals("equal"+failString, beanCount, inSlot);
+		System.out.println(failString);
 	}
 	
 	/**

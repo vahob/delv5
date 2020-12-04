@@ -322,14 +322,15 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 				bean = inFlightBeans[i + 1];
 				if (prev != null) {
 					prev.choose();
+					anyStatusChange = true;
 				}
 				inFlightBeans[i + 1] = prev;
-				anyStatusChange = true;
+				
 			} else {
 				// System.out.println("i else: " + i);
 				if (bean != null) {
 					this.slotBean[bean.getXPos()].add(bean);
-					anyStatusChange = true;
+					anyStatusChange = false;
 				}
 			}
 
