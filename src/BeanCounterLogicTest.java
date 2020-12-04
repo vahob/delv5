@@ -348,11 +348,11 @@ public class BeanCounterLogicTest {
 	 * Test case for void testNumberOfBeanCounts().
 	 * Preconditions: None.
 	 * Execution steps: Call logic.reset(beans).
-	 *                  Call logic.advanceStep() in a loop until it returns false (the machine terminates).
-	 * 					Call logic.upperHalf().
-	 * 					Call logic.lowerHalf().
-	 * 					Call logic.repeat().
-	 * 					Call logic.advanceStep() in a loop until it returns false (the machine terminates).
+	 *  Call logic.advanceStep() in a loop until it returns false (the machine terminates).
+	 * 	Call logic.upperHalf().
+	 * 	Call logic.lowerHalf().
+	 * 	Call logic.repeat().
+	 * 	Call logic.advanceStep() in a loop until it returns false (the machine terminates).
 	 * Invariants: After calling logic.upperHalf(), logic.upperHalf(),
 	 *             slots in the machine contain only 1/4 of the original beans.
 	 *             Remember, if there were an odd number of beans, (N+1)/2 beans should remain.
@@ -371,10 +371,10 @@ public class BeanCounterLogicTest {
 
 		}
 		int sumOfCounts = 0;
-		for (int i = 0; i < slotCount; i++){
+		for (int i = 0; i < slotCount; i++) {
 			sumOfCounts += logic.getSlotBeanCount(i);
 		}
-		assertEquals(failString, sumOfCounts, beanCount/4);
+		assertEquals(failString, sumOfCounts, (int) Math.ceil(beanCount / 4.0));
 
 
 	}

@@ -71,7 +71,6 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 	 */
 	public int getRemainingBeanCount() {
 		// TODO: Implement
-		// System.out.println("remainig size: " + remainingBeans.size());
 		return remainingBeans.size();
 	}
 
@@ -142,11 +141,10 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 		int deleted = 0;
 		 
 		while (deleted < (double) (sumOfSlotCounts / 2.0)) {
-			
 
-			 
-			if (beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0) {
-				 
+			if (beanNumber < getSlotBeanCount(slot) 
+					&& beanNumber >= 0
+					&& getSlotBeanCount(slot) > 0) {				 
 				slotBean[slot].remove(beanNumber--);
 				deleted++;
 			} else {
@@ -190,26 +188,19 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 		if (sumOfSlotCounts < 0) {
 			return;
 		}
-		// if(getSlotCount() == 1 && getSumOfSlotCount() == 1) return;
+		
 		int slot = getSlotCount() - 1;
 		int beanNumber = getSlotBeanCount(slot) - 1;
 		int deleted = 0;
-		// System.out.println("sumOfCounts: " + sumOfSlotCounts);
+		
 		while (deleted < (double) (sumOfSlotCounts / 2.0)) {
-			/*
-			 * if (slotBean.get(slot).isEmpty()) { slot++; beanNumber = 0;
-			 * System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber); }
-			 */
-
-			// System.out.println("i: " + deleted + " count: " + getSlotBeanCount(slot)+"
-			// beanNumber: " + beanNumber);
+			
 			if (beanNumber < getSlotBeanCount(slot) && beanNumber >= 0 && getSlotBeanCount(slot) > 0) {
-				// System.out.println("slot not empty: slot: " + slot + " beanN: " +
-				// beanNumber);
+				
 				slotBean[slot].remove(beanNumber--);
 				deleted++;
 			} else {
-				// System.out.println("slot empty: slot: " + slot + " beanN: " + beanNumber);
+				
 				if (slot >= 0) {
 					slot--;
 				}
@@ -243,8 +234,7 @@ public class BeanCounterLogicImpl implements BeanCounterLogic {
 			return;
 		}
 
-		this.remainingBeans.addAll(Arrays.asList(beans));
-		// System.out.println("reset: ");
+		this.remainingBeans.addAll(Arrays.asList(beans));		
 		insertBean();
 		if (inFlightBeans[0] != null) {
 			inFlightBeans[0].reset();
