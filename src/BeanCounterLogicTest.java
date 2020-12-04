@@ -207,9 +207,9 @@ public class BeanCounterLogicTest {
 				inFlight++;
 			}				
 		}
-		assertEquals("rem"+failString, rem, 0);
-		assertEquals("inf "+failString, inFlight, 0);
-		assertEquals("equal"+failString, beanCount, inSlot);
+		assertEquals(failString, rem, 0);
+		assertEquals(failString, inFlight, 0);
+		assertEquals(failString, beanCount, inSlot);
 		System.out.println(failString);
 	}
 	
@@ -339,8 +339,7 @@ public class BeanCounterLogicTest {
 			assertArrayEquals(failString, firstRun, secondRun);
 		}
 
-		
-		
-
 	}
+
+	
 }
