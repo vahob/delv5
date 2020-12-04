@@ -364,7 +364,11 @@ public class BeanCounterLogicTest {
 		while (logic.advanceStep()) {
 
 		}
-		
+		int sumOfCounts = 0;
+		for (int i = 0; i < slotCount; i++){
+			sumOfCounts += logic.getSlotBeanCount(i);
+		}
+		assertArrayEquals(failString, sumOfCounts, beanCount/4);
 
 
 	}
