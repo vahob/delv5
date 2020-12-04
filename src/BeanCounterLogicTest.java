@@ -292,13 +292,16 @@ public class BeanCounterLogicTest {
 		int beanC = 0;
 		int slotC = slotCount - 1;
 		int upperHalf = beanCount % 2 == 0 ? beanCount / 2 : (beanCount + 1) / 2;
+		System.out.println("beanC: " + beanC + " upper: " + upperHalf);
 		while (beanC < upperHalf && slotC >= 0) {
 			if (prevSlot[slotC] == newSlot[slotC]) {
 				testSlot[slotC] = prevSlot[slotC];
 				beanC += prevSlot[slotC];
+				System.out.println("beanC: " + beanC);
 				slotC--;
 			} else {
 				testSlot[slotC] = upperHalf - beanC;
+				System.out.println("prevC: " + prevSlot[slotC] + " newC: " + newSlot[slotC]);
 				break;
 			}
 				
@@ -338,6 +341,21 @@ public class BeanCounterLogicTest {
 		if (!isLuck) {
 			assertArrayEquals(failString, firstRun, secondRun);
 		}
+
+	}
+
+	/**
+	 * Test case for void testInsertAtTopOfMachine.
+	 * Preconditions: None.
+	 * Execution steps: Call logic.reset(beans).
+	 *                  Call logic.advanceStep() until the number of remaining beans is 0.
+	 * Invariants: If the machine is operating in skill mode,
+	 *             bean count in each slot is identical after the first run and second run of the machine. 
+	 */
+	@Test
+	public void testInsertAtTopOfMachine() {
+		logic.reset(beans);
+
 
 	}
 
