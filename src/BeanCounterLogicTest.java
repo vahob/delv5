@@ -345,15 +345,21 @@ public class BeanCounterLogicTest {
 	}
 
 	/**
-	 * Test case for void testInsertAtTopOfMachine.
+	 * Test case for void testNumberOfBeanCounts().
 	 * Preconditions: None.
 	 * Execution steps: Call logic.reset(beans).
-	 *                  Call logic.advanceStep() until the number of remaining beans is 0.
-	 * Invariants: If the machine is operating in skill mode,
-	 *             bean count in each slot is identical after the first run and second run of the machine. 
+	 *                  Call logic.advanceStep() in a loop until it returns false (the machine terminates).
+	 * 					Call logic.upperHalf().
+	 * 					Call logic.lowerHalf().
+	 * 					Call logic.repeat().
+	 * 					Call logic.advanceStep() in a loop until it returns false (the machine terminates).
+	 * Invariants: After calling logic.upperHalf(), logic.upperHalf(),
+	 *             slots in the machine contain only 1/4 of the original beans.
+	 *             Remember, if there were an odd number of beans, (N+1)/2 beans should remain.
+	 *             Check the number of beans after calling logic.upperHalf(), logic.upperHalf() consecutively.
 	 */
 	@Test
-	public void testInsertAtTopOfMachine() {
+	public void testNumberOfBeanCounts() {
 		logic.reset(beans);
 		while (logic.advanceStep()) {
 
@@ -368,7 +374,7 @@ public class BeanCounterLogicTest {
 		for (int i = 0; i < slotCount; i++){
 			sumOfCounts += logic.getSlotBeanCount(i);
 		}
-		assertArrayEquals(failString, sumOfCounts, beanCount/4);
+		assertEquals(failString, sumOfCounts, beanCount/4);
 
 
 	}
